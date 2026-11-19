@@ -1,0 +1,665 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бекзат & Дильназ — Wedding</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html { scroll-behavior:smooth; }
+
+body {
+  background:#f8f5ef;
+  color:#625348;
+  font-family:'Montserrat',sans-serif;
+  overflow-x:hidden;
+}
+
+/* ЛЕТАЮЩИЕ БЕЛЫЕ ПТИЦЫ */
+
+.birds {
+  position:fixed;
+  inset:0;
+  z-index:20;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+.bird {
+  position:absolute;
+  width:65px;
+  fill:white;
+  filter:drop-shadow(0 2px 5px rgba(80,65,50,.2));
+  animation:fly linear infinite;
+  opacity:0;
+}
+
+.bird:nth-child(1) {
+  top:17%;
+  animation-duration:17s;
+  animation-delay:0s;
+  width:65px;
+}
+
+.bird:nth-child(2) {
+  top:38%;
+  animation-duration:23s;
+  animation-delay:4s;
+  width:42px;
+}
+
+.bird:nth-child(3) {
+  top:65%;
+  animation-duration:20s;
+  animation-delay:8s;
+  width:55px;
+}
+
+.bird:nth-child(4) {
+  top:82%;
+  animation-duration:26s;
+  animation-delay:2s;
+  width:38px;
+}
+
+.bird:nth-child(5) {
+  top:28%;
+  animation-duration:19s;
+  animation-delay:12s;
+  width:48px;
+}
+
+@keyframes fly {
+  0% {
+    transform:translate(-120px,30px) scale(.8) rotate(5deg);
+    opacity:0;
+  }
+  10% { opacity:.95; }
+  35% {
+    transform:translate(35vw,-35px) scale(1) rotate(-5deg);
+  }
+  65% {
+    transform:translate(70vw,35px) scale(.9) rotate(5deg);
+  }
+  90% { opacity:.9; }
+  100% {
+    transform:translate(115vw,-20px) scale(.8) rotate(-5deg);
+    opacity:0;
+  }
+}
+
+.wings {
+  transform-origin:center;
+  animation:flap .7s ease-in-out infinite alternate;
+}
+
+@keyframes flap {
+  from { transform:scaleY(.55); }
+  to { transform:scaleY(1.1); }
+}
+
+/* ГЛАВНЫЙ ЭКРАН */
+
+.hero {
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:30px 20px;
+  background:
+    linear-gradient(rgba(35,28,22,.25),rgba(35,28,22,.45)),
+    url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1800')
+    center/cover;
+  color:white;
+  position:relative;
+}
+
+.hero-content {
+  border:1px solid rgba(255,255,255,.7);
+  padding:65px 25px;
+  width:min(100%,650px);
+  animation:heroAppear 2s ease both;
+}
+
+@keyframes heroAppear {
+  from { opacity:0; transform:translateY(35px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.small {
+  font-size:11px;
+  letter-spacing:5px;
+  margin-bottom:30px;
+}
+
+.names {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(55px,12vw,100px);
+  font-weight:300;
+  line-height:1.05;
+}
+
+.amp {
+  font-size:50px;
+  color:#e8d3b6;
+}
+
+.date {
+  margin-top:35px;
+  letter-spacing:5px;
+  font-size:18px;
+}
+
+/* АНИМАЦИЯ ПРИ ПРОКРУТКЕ */
+
+.reveal {
+  opacity:0;
+  transform:translateY(65px);
+  transition:
+    opacity 1.1s ease,
+    transform 1.1s cubic-bezier(.2,.7,.2,1);
+}
+
+.reveal.visible {
+  opacity:1;
+  transform:translateY(0);
+}
+
+.reveal-left {
+  transform:translateX(-65px);
+}
+
+.reveal-right {
+  transform:translateX(65px);
+}
+
+.reveal-left.visible,
+.reveal-right.visible {
+  transform:translateX(0);
+}
+
+.reveal-scale {
+  transform:scale(.85);
+}
+
+.reveal-scale.visible {
+  transform:scale(1);
+}
+
+/* ОБЩИЕ БЛОКИ */
+
+.section {
+  padding:100px 20px;
+  max-width:850px;
+  margin:auto;
+  text-align:center;
+}
+
+h2 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:48px;
+  font-weight:400;
+  margin-bottom:25px;
+  color:#96785d;
+}
+
+.description {
+  font-size:14px;
+  line-height:2.2;
+  max-width:550px;
+  margin:auto;
+}
+
+.line {
+  width:60px;
+  height:1px;
+  background:#b49b7f;
+  margin:30px auto;
+}
+
+/* ТАЙМЕР */
+
+.countdown {
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-top:35px;
+}
+
+.time {
+  background:#eee6da;
+  padding:20px 15px;
+  min-width:85px;
+}
+
+.time strong {
+  display:block;
+  font-family:'Cormorant Garamond',serif;
+  font-size:38px;
+  font-weight:400;
+  color:#987b60;
+}
+
+.time span {
+  font-size:9px;
+  letter-spacing:2px;
+}
+
+/* ПРОГРАММА */
+
+.program {
+  background:#eee7dc;
+  padding:90px 20px;
+  text-align:center;
+}
+
+.program-item {
+  margin:40px 0;
+}
+
+.program-item strong {
+  display:block;
+  font-family:'Cormorant Garamond',serif;
+  font-size:38px;
+  color:#987b60;
+  font-weight:400;
+}
+
+.program-item p {
+  margin-top:8px;
+  font-size:13px;
+}
+
+/* ЛОКАЦИЯ */
+
+.place {
+  font-family:'Cormorant Garamond',serif;
+  font-size:38px;
+  color:#987b60;
+  margin:20px 0;
+}
+
+.map-button {
+  display:inline-block;
+  margin-top:30px;
+  padding:17px 30px;
+  background:#92785f;
+  color:white;
+  text-decoration:none;
+  font-size:11px;
+  letter-spacing:2px;
+  transition:.3s;
+}
+
+.map-button:hover {
+  background:#705941;
+  transform:translateY(-4px);
+}
+
+/* ДРЕСС-КОД */
+
+.dress {
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin:30px 0;
+}
+
+.color {
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  border:1px solid #d9cfc0;
+}
+
+/* RSVP */
+
+.rsvp {
+  background:#eee7dc;
+  text-align:center;
+}
+
+input, select {
+  width:100%;
+  max-width:400px;
+  padding:16px;
+  margin:9px auto;
+  display:block;
+  border:1px solid #d8c9b7;
+  background:#f8f5ef;
+  color:#625348;
+  font-family:inherit;
+}
+
+button {
+  background:#92785f;
+  color:white;
+  border:0;
+  padding:17px 35px;
+  letter-spacing:2px;
+  cursor:pointer;
+  margin-top:20px;
+  transition:.3s;
+}
+
+button:hover {
+  background:#705941;
+  transform:translateY(-3px);
+}
+
+footer {
+  padding:65px 20px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;
+  color:#987b60;
+  text-align:center;
+}
+
+@media(max-width:500px) {
+  .hero-content { padding:50px 15px; }
+  h2 { font-size:40px; }
+  .section { padding:75px 20px; }
+  .bird { width:40px; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .reveal {
+    opacity:1;
+    transform:none;
+    transition:none;
+  }
+  .bird { animation:none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- БЕЛЫЕ ЛЕТАЮЩИЕ ПТИЦЫ -->
+<div class="birds">
+
+<svg class="bird" viewBox="0 0 100 60">
+ <path class="wings" d="M5 30 Q25 0 50 25 Q75 0 95 30 Q72 20 50 43 Q28 20 5 30Z"/>
+</svg>
+
+<svg class="bird" viewBox="0 0 100 60">
+ <path class="wings" d="M5 30 Q25 0 50 25 Q75 0 95 30 Q72 20 50 43 Q28 20 5 30Z"/>
+</svg>
+
+<svg class="bird" viewBox="0 0 100 60">
+ <path class="wings" d="M5 30 Q25 0 50 25 Q75 0 95 30 Q72 20 50 43 Q28 20 5 30Z"/>
+</svg>
+
+<svg class="bird" viewBox="0 0 100 60">
+ <path class="wings" d="M5 30 Q25 0 50 25 Q75 0 95 30 Q72 20 50 43 Q28 20 5 30Z"/>
+</svg>
+
+<svg class="bird" viewBox="0 0 100 60">
+ <path class="wings" d="M5 30 Q25 0 50 25 Q75 0 95 30 Q72 20 50 43 Q28 20 5 30Z"/>
+</svg>
+
+</div>
+
+<!-- ГЛАВНЫЙ ЭКРАН -->
+
+<header class="hero">
+ <div class="hero-content">
+  <div class="small">СВАДЕБНОЕ ПРИГЛАШЕНИЕ</div>
+
+  <div class="names">
+   Бекзат
+   <div class="amp">&</div>
+   Дильназ
+  </div>
+
+  <div class="line"></div>
+
+  <p>МЫ СОЗДАЁМ СВОЮ ИСТОРИЮ ЛЮБВИ</p>
+
+  <div class="date">30 · 03 · 2030</div>
+ </div>
+</header>
+
+<!-- ПРИГЛАШЕНИЕ -->
+
+<section class="section reveal">
+ <h2>Дорогие гости!</h2>
+ <div class="line"></div>
+
+ <p class="description">
+  Есть моменты, которые хочется разделить
+  с самыми дорогими людьми.<br><br>
+
+  Мы будем счастливы видеть вас
+  на празднике рождения нашей семьи.<br><br>
+
+  С любовью и радостью ждём вас!
+ </p>
+</section>
+
+<!-- ТАЙМЕР -->
+
+<section class="section reveal-scale">
+ <h2>До нашей свадьбы</h2>
+ <p>Осталось совсем немного...</p>
+
+ <div class="countdown">
+  <div class="time">
+   <strong id="days">0</strong>
+   <span>ДНЕЙ</span>
+  </div>
+
+  <div class="time">
+   <strong id="hours">0</strong>
+   <span>ЧАСОВ</span>
+  </div>
+
+  <div class="time">
+   <strong id="minutes">0</strong>
+   <span>МИНУТ</span>
+  </div>
+
+  <div class="time">
+   <strong id="seconds">0</strong>
+   <span>СЕКУНД</span>
+  </div>
+ </div>
+</section>
+
+<!-- ПРОГРАММА -->
+
+<section class="program">
+ <h2 class="reveal">Программа дня</h2>
+
+ <div class="program-item reveal-left">
+  <strong>18:00</strong>
+  <p>Сбор дорогих гостей</p>
+ </div>
+
+ <div class="program-item reveal-right">
+  <strong>18:30</strong>
+  <p>Начало торжества</p>
+ </div>
+
+ <div class="program-item reveal-left">
+  <strong>19:00</strong>
+  <p>Праздничный вечер</p>
+ </div>
+
+ <div class="program-item reveal-right">
+  <strong>23:00</strong>
+  <p>Танцы и незабываемые моменты</p>
+ </div>
+</section>
+
+<!-- МЕСТО -->
+
+<section class="section reveal">
+ <h2>Место встречи</h2>
+
+ <p class="description">
+  Мы будем ждать вас в прекрасном городе
+ </p>
+
+ <div class="place">Атырау</div>
+ <div class="line"></div>
+
+ <p>Ресторан «Аль-Фараби»</p>
+ <p style="margin-top:12px">30 марта 2030 года · 18:00</p>
+
+ <a class="map-button"
+ href="https://2gis.kz/atyrau/geo/70000001035244907/51.872967,47.092922?inv_by=ff5fd80bc3b74bc5bfe8fd100a3edd1c&inv_ts=1795084522"
+ target="_blank" rel="noopener">
+  <span>ОТКРЫТЬ МАРШРУТ В 2GIS ↗</span>
+ </a>
+</section>
+
+<!-- ДРЕСС-КОД -->
+
+<section class="section reveal-scale">
+ <h2>Dress Code</h2>
+
+ <p class="description">
+  Будем благодарны, если вы поддержите
+  атмосферу нашего праздника
+  в нежных и элегантных оттенках.
+ </p>
+
+ <div class="dress">
+  <div class="color" style="background:#eee4d5"></div>
+  <div class="color" style="background:#d9c5aa"></div>
+  <div class="color" style="background:#b49a7b"></div>
+  <div class="color" style="background:#a99c91"></div>
+  <div class="color" style="background:#f8f5ef"></div>
+ </div>
+
+ <p style="font-size:11px;letter-spacing:2px">
+  BEIGE · CREAM · CHAMPAGNE
+ </p>
+</section>
+
+<!-- ПОДТВЕРЖДЕНИЕ -->
+
+<section class="section rsvp reveal">
+ <h2>Будете с нами?</h2>
+
+ <p class="description">
+  Пожалуйста, подтвердите своё присутствие.
+  Мы будем рады видеть вас!
+ </p>
+
+ <form id="rsvpForm">
+  <input id="guest" type="text"
+   placeholder="Ваше имя и фамилия" required>
+
+  <select id="attendance" required>
+   <option value="">Выберите ответ</option>
+   <option>С радостью приду!</option>
+   <option>К сожалению, не смогу</option>
+  </select>
+
+  <button type="submit">ОТПРАВИТЬ ОТВЕТ</button>
+ </form>
+
+ <p id="result" style="margin-top:20px;font-size:13px"></p>
+</section>
+
+<footer class="reveal">
+ Бекзат & Дильназ
+
+ <p style="font-family:Montserrat;font-size:10px;
+ letter-spacing:3px;margin-top:15px">
+  С ЛЮБОВЬЮ · 30.03.2030
+ </p>
+</footer>
+
+<script>
+
+/* АНИМАЦИЯ ПРИ ПРОКРУТКЕ */
+
+const observer = new IntersectionObserver((entries) => {
+ entries.forEach(entry => {
+  if (entry.isIntersecting) {
+   entry.target.classList.add('visible');
+   observer.unobserve(entry.target);
+  }
+ });
+}, {
+ threshold:0.12,
+ rootMargin:'0px 0px -40px 0px'
+});
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale')
+.forEach(element => observer.observe(element));
+
+
+/* ОБРАТНЫЙ ОТСЧЁТ */
+
+const wedding = new Date('2030-03-30T18:00:00+05:00');
+
+function updateCountdown() {
+ const diff = wedding - new Date();
+
+ if (diff <= 0) {
+  document.querySelector('.countdown').innerHTML =
+   'СЕГОДНЯ НАШ ОСОБЕННЫЙ ДЕНЬ ❤️';
+  return;
+ }
+
+ document.getElementById('days').textContent =
+  Math.floor(diff / 86400000);
+
+ document.getElementById('hours').textContent =
+  Math.floor(diff / 3600000) % 24;
+
+ document.getElementById('minutes').textContent =
+  Math.floor(diff / 60000) % 60;
+
+ document.getElementById('seconds').textContent =
+  Math.floor(diff / 1000) % 60;
+}
+
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+
+/* RSVP */
+
+document.getElementById('rsvpForm')
+.addEventListener('submit', function(e) {
+ e.preventDefault();
+
+ const name = document.getElementById('guest').value;
+ const answer = document.getElementById('attendance').value;
+
+ const message =
+  'Имя: ' + name + '\nОтвет: ' + answer;
+
+ if (navigator.clipboard) {
+  navigator.clipboard.writeText(message)
+   .then(() => {
+    document.getElementById('result').textContent =
+     'Ответ скопирован! Отправьте его молодожёнам ❤️';
+   })
+   .catch(() => {
+    document.getElementById('result').textContent = message;
+   });
+ } else {
+  document.getElementById('result').textContent = message;
+ }
+});
+
+</script>
+
+</body>
+</html>
